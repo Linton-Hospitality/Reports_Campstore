@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -135,6 +136,35 @@ body{
 .insight-body{font-size:12px;color:var(--muted);font-style:italic;line-height:1.5;}
 
 .mb-36{margin-bottom:36px;}
+
+/* SKU EXPANDABLE */
+.sku-toggle-btn{font-family:'Karrik',Georgia,serif;font-size:12px;padding:8px 20px;border:1px solid var(--border);border-radius:3px;background:var(--sand);color:var(--forest);cursor:pointer;transition:all .15s;font-style:italic;}
+.sku-toggle-btn:hover{background:var(--forest);color:var(--cream);border-color:var(--forest);}
+.sku-panel{display:none;margin-top:16px;}
+.sku-filter-bar{background:var(--white);border:1px solid var(--border);border-radius:4px 4px 0 0;padding:12px 16px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;border-bottom:none;}
+.sku-filter-bar label{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-style:italic;flex-shrink:0;}
+.sku-filter-btn{font-family:'Karrik',Georgia,serif;font-size:11px;padding:4px 12px;border:1px solid var(--border);border-radius:3px;background:var(--sand);color:var(--charcoal);cursor:pointer;transition:all .15s;white-space:nowrap;}
+.sku-filter-btn:hover,.sku-filter-btn.active{background:var(--forest);color:var(--cream);border-color:var(--forest);}
+.sku-search{font-family:'Karrik',Georgia,serif;font-size:12px;padding:4px 12px;border:1px solid var(--border);border-radius:3px;background:var(--white);color:var(--charcoal);width:180px;}
+.sku-search:focus{outline:none;border-color:var(--forest);}
+.sku-count{font-size:11px;color:var(--muted);font-style:italic;margin-left:auto;flex-shrink:0;}
+.sku-table{width:100%;border-collapse:collapse;font-size:12px;background:var(--white);border:1px solid var(--border);border-radius:0 0 4px 4px;overflow:hidden;}
+.sku-table thead tr{background:var(--forest);}
+.sku-th{font-family:'Karrik',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,248,231,.55);padding:10px 14px;text-align:left;font-weight:400;font-style:italic;cursor:pointer;user-select:none;white-space:nowrap;}
+.sku-th:hover{color:var(--cream);}
+.sku-th:not(:first-child):not(:nth-child(2)){text-align:right;}
+.sku-th:last-child{text-align:center;}
+.sku-th .sort-arrow{display:inline-block;margin-left:3px;opacity:.35;font-style:normal;}
+.sku-th.sorted .sort-arrow{opacity:1;}
+.sku-table td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.sku-table tr:last-child td{border-bottom:none;}
+.sku-table tr:hover td{background:rgba(237,232,216,.45);}
+.sku-vel{font-size:9px;padding:2px 8px;border-radius:3px;font-weight:500;font-family:'Karrik',monospace;letter-spacing:.06em;text-transform:uppercase;}
+.sku-vel.high{background:rgba(48,103,57,.15);color:#1F5C2E;}
+.sku-vel.mid{background:rgba(183,189,164,.4);color:#3A5020;}
+.sku-vel.low{background:rgba(194,118,10,.12);color:#7A4A08;}
+.sku-vel.slow{background:rgba(107,107,88,.1);color:var(--muted);}
+.sku-note{background:var(--sand);border-left:3px solid var(--forest);padding:10px 16px;font-size:11px;color:var(--muted);font-style:italic;line-height:1.6;border:1px solid var(--border);border-top:none;}
 </style>
 </head>
 <body>
@@ -363,6 +393,50 @@ body{
     </div>
   </div>
 
+  <!-- SKU EXPANDABLE -->
+  <div>
+    <div class="section-label"><span class="section-label-mark"></span>Full SKU Breakdown</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0;">
+      <p style="font-size:12px;color:var(--muted);font-style:italic;">65 SKUs across 7 categories — Aug 13, 2025 through Apr 30, 2026. Filter by category, search by item or SKU, or sort any column.</p>
+      <button class="sku-toggle-btn" id="skuToggleBtn">View All 65 SKUs ↓</button>
+    </div>
+    <div class="sku-panel" id="skuPanel">
+      <div class="sku-filter-bar">
+        <label>Category</label>
+        <button class="sku-filter-btn active" data-cat="all">All</button>
+        <button class="sku-filter-btn" data-cat="Camp Essentials">Camp Essentials</button>
+        <button class="sku-filter-btn" data-cat="Merchandise">Merchandise</button>
+        <button class="sku-filter-btn" data-cat="S'mores">S'mores</button>
+        <button class="sku-filter-btn" data-cat="Kitchen & Snacks">Kitchen & Snacks</button>
+        <button class="sku-filter-btn" data-cat="Beverage">Beverage</button>
+        <button class="sku-filter-btn" data-cat="Health & Body">Health & Body</button>
+        <button class="sku-filter-btn" data-cat="Games">Games</button>
+        <input type="text" class="sku-search" placeholder="Search item or SKU…" id="skuSearch">
+        <span class="sku-count" id="skuCount">65 items</span>
+      </div>
+      <table class="sku-table">
+        <thead>
+          <tr>
+            <th class="sku-th" data-sort="item">Item <span class="sort-arrow">↕</span></th>
+            <th class="sku-th" data-sort="sku">SKU <span class="sort-arrow">↕</span></th>
+            <th class="sku-th" data-sort="units" style="text-align:right">Units Sold <span class="sort-arrow">↕</span></th>
+            <th class="sku-th" data-sort="price" style="text-align:right">Avg Price <span class="sort-arrow">↕</span></th>
+            <th class="sku-th sorted" data-sort="net" style="text-align:right">Net Sales <span class="sort-arrow">↓</span></th>
+            <th class="sku-th" data-sort="gp" style="text-align:right">Gross Profit <span class="sort-arrow">↕</span></th>
+            <th class="sku-th" data-sort="margin" style="text-align:right">Margin <span class="sort-arrow">↕</span></th>
+            <th class="sku-th" data-sort="units" style="text-align:center">Velocity</th>
+          </tr>
+        </thead>
+        <tbody id="skuTbody"></tbody>
+      </table>
+      <div class="sku-note">
+        <strong>Velocity:</strong> Strong = 200+ units · Solid = 50–199 · Light = 10–49 · Slow = under 10 over 9 months. &nbsp;·&nbsp;
+        <strong>Gross profit:</strong> Confirmed COGS used where known; all others estimated at 50% of retail. &nbsp;·&nbsp;
+        <strong>Note:</strong> This data reflects Promised Land, PA only. Category and item performance may vary by location and season.
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <script>
@@ -446,6 +520,161 @@ merch.forEach(r=>{
     <td><span class="margin-high">${r.margin}%</span></td>
     <td style="font-weight:500;color:var(--green)">+$${r.gp.toLocaleString()}</td>
   </tr>`;
+});
+
+// ── SKU TABLE ──
+const skuData=[
+  {cat:"Camp Essentials",item:"Firewood (Hot Tub)",sku:"496987F",units:1132,price:9.93,net:11243,gp:6715,margin:59.7,confirmed:true},
+  {cat:"Camp Essentials",item:"Firewood (Campfire)",sku:"133120M",units:1111,price:9.88,net:10976,gp:6532,margin:59.5,confirmed:true},
+  {cat:"Camp Essentials",item:"Lightning Nugget Fire Starter",sku:"579276B",units:713,price:6.00,net:4276,gp:2137,margin:50.0,confirmed:true},
+  {cat:"Camp Essentials",item:"Fire Lighter",sku:"4044357",units:250,price:5.96,net:1490,gp:745,margin:50.0,confirmed:false},
+  {cat:"Camp Essentials",item:"Bagged Ice",sku:"3130301",units:305,price:2.94,net:898,gp:450,margin:50.1,confirmed:false},
+  {cat:"Camp Essentials",item:"Charcoal",sku:"6523942",units:4,price:9.00,net:36,gp:18,margin:50.0,confirmed:false},
+  {cat:"Merchandise",item:"Ferncrest Hat",sku:"2724080",units:80,price:24.47,net:1957,gp:997,margin:51.0,confirmed:true},
+  {cat:"Merchandise",item:"Adult Ferncrest Shirt",sku:"C111385",units:58,price:23.78,net:1379,gp:683,margin:49.5,confirmed:true},
+  {cat:"Merchandise",item:"Ferncrest Hospitality Mug",sku:"5148165",units:61,price:15.65,net:955,gp:576,margin:60.4,confirmed:true},
+  {cat:"Merchandise",item:"Adult Ferncrest Sweatshirt",sku:"478618L",units:22,price:33.49,net:737,gp:319,margin:43.3,confirmed:true},
+  {cat:"Merchandise",item:"Ferncrest Candle",sku:"945720M",units:39,price:17.16,net:669,gp:318,margin:47.5,confirmed:true},
+  {cat:"Merchandise",item:"Ferncrest Diner Mug",sku:"3663511",units:46,price:11.55,net:531,gp:264,margin:49.8,confirmed:true},
+  {cat:"Merchandise",item:"Kids Ferncrest Shirt",sku:"208900P",units:23,price:17.22,net:396,gp:189,margin:47.7,confirmed:true},
+  {cat:"Merchandise",item:"Motel Keychain (assorted)",sku:"970452L",units:63,price:4.62,net:291,gp:146,margin:50.0,confirmed:false},
+  {cat:"Merchandise",item:"Ferncrest Pennant",sku:"N298976",units:12,price:17.42,net:209,gp:104,margin:50.0,confirmed:false},
+  {cat:"Merchandise",item:"Signature Tote",sku:"189159B",units:12,price:15.00,net:180,gp:90,margin:50.0,confirmed:false},
+  {cat:"Merchandise",item:"RTIC Water Bottle 20oz",sku:"6455132",units:7,price:24.00,net:168,gp:84,margin:50.0,confirmed:false},
+  {cat:"Merchandise",item:"Kids Ferncrest Sweatshirt",sku:"379032N",units:4,price:25.00,net:100,gp:50,margin:50.0,confirmed:false},
+  {cat:"Merchandise",item:"RTIC Kids Water Bottle",sku:"554324F",units:5,price:18.00,net:90,gp:45,margin:50.0,confirmed:false},
+  {cat:"Merchandise",item:"LitezAll Led Clip-On Work Light",sku:"S051287",units:5,price:12.00,net:60,gp:30,margin:50.0,confirmed:false},
+  {cat:"Merchandise",item:"Flip Flops (any size/color)",sku:"2778286",units:10,price:5.00,net:50,gp:25,margin:50.0,confirmed:false},
+  {cat:"Merchandise",item:"RTIC Journey Bottle",sku:"S844492",units:2,price:22.00,net:44,gp:22,margin:50.0,confirmed:false},
+  {cat:"Merchandise",item:"Postcards",sku:"4929364",units:173,price:0.24,net:42,gp:21,margin:50.5,confirmed:false},
+  {cat:"Merchandise",item:"RTIC Road Trip Travel Mug",sku:"748030E",units:1,price:38.00,net:38,gp:19,margin:50.0,confirmed:false},
+  {cat:"Merchandise",item:"Headlamp",sku:"109924V",units:4,price:7.50,net:30,gp:15,margin:50.0,confirmed:false},
+  {cat:"Merchandise",item:"LitezAll Glow in Dark Flashlight",sku:"Y699950",units:1,price:8.00,net:8,gp:4,margin:50.0,confirmed:false},
+  {cat:"S'mores",item:"Smorstix",sku:"W066020",units:140,price:4.85,net:678,gp:328,margin:48.4,confirmed:true},
+  {cat:"S'mores",item:"Hershey Chocolate Bar",sku:"D133474",units:171,price:2.90,net:495,gp:247,margin:49.9,confirmed:false},
+  {cat:"S'mores",item:"Honey Maid Graham Crackers",sku:"B687437",units:69,price:7.53,net:519,gp:260,margin:50.0,confirmed:false},
+  {cat:"S'mores",item:"Jet-Puffed Marshmallows",sku:"R816713",units:83,price:4.85,net:402,gp:201,margin:50.0,confirmed:false},
+  {cat:"Kitchen & Snacks",item:"Ice Cream Bar",sku:"7708367",units:151,price:2.94,net:443,gp:221,margin:49.9,confirmed:false},
+  {cat:"Kitchen & Snacks",item:"Black & Brass Coffee",sku:"A236893",units:97,price:3.88,net:376,gp:188,margin:50.0,confirmed:false},
+  {cat:"Kitchen & Snacks",item:"Streamside Maple Syrup",sku:"Q395325",units:25,price:14.40,net:360,gp:180,margin:50.0,confirmed:false},
+  {cat:"Kitchen & Snacks",item:"Hampstead Organic Tea",sku:"6243875",units:33,price:7.27,net:240,gp:120,margin:50.0,confirmed:false},
+  {cat:"Kitchen & Snacks",item:"Amish Country Popcorn (3pk)",sku:"339189A",units:43,price:5.00,net:215,gp:108,margin:50.0,confirmed:false},
+  {cat:"Kitchen & Snacks",item:"Spork",sku:"629980Q",units:64,price:2.91,net:186,gp:93,margin:49.9,confirmed:false},
+  {cat:"Kitchen & Snacks",item:"Aluminum Foil",sku:"804381X",units:3,price:4.00,net:12,gp:6,margin:50.0,confirmed:false},
+  {cat:"Kitchen & Snacks",item:"Cling Wrap",sku:"G897565",units:2,price:4.00,net:8,gp:4,margin:50.0,confirmed:false},
+  {cat:"Beverage",item:"Rival Bros Coffee",sku:"665478W",units:50,price:5.00,net:250,gp:125,margin:50.0,confirmed:false},
+  {cat:"Beverage",item:"Poppi Prebiotic Soda",sku:"155955W",units:51,price:4.84,net:247,gp:123,margin:50.0,confirmed:false},
+  {cat:"Beverage",item:"Rain Bottle Water",sku:"J198225",units:33,price:3.00,net:99,gp:50,margin:50.0,confirmed:false},
+  {cat:"Beverage",item:"Hint Flavored Water",sku:"D401446",units:31,price:3.00,net:93,gp:47,margin:50.0,confirmed:false},
+  {cat:"Beverage",item:"Bloom Sparkling Energy Drink",sku:"477372Q",units:17,price:5.00,net:85,gp:43,margin:50.0,confirmed:false},
+  {cat:"Beverage",item:"Swoon Sugar Free Lemonade",sku:"929524G",units:28,price:3.00,net:84,gp:42,margin:50.0,confirmed:false},
+  {cat:"Beverage",item:"La Croix",sku:"G727638",units:25,price:2.76,net:69,gp:35,margin:50.0,confirmed:false},
+  {cat:"Beverage",item:"Spindrift Sparkling Water",sku:"Z915332",units:22,price:3.00,net:66,gp:33,margin:50.0,confirmed:false},
+  {cat:"Beverage",item:"JUST Spring Water",sku:"769415H",units:11,price:3.00,net:33,gp:17,margin:50.0,confirmed:false},
+  {cat:"Beverage",item:"La Colombe Draft Latte",sku:"F084604",units:5,price:5.00,net:25,gp:13,margin:50.0,confirmed:false},
+  {cat:"Beverage",item:"Celsius Energy Drink",sku:"1257647",units:5,price:3.00,net:15,gp:8,margin:50.0,confirmed:false},
+  {cat:"Health & Body",item:"Murphy's Mosquito Candle 3.5oz",sku:"P185562",units:17,price:9.41,net:160,gp:80,margin:50.0,confirmed:false},
+  {cat:"Health & Body",item:"Murphy's Mosquito Repellent 2oz",sku:"1916976",units:15,price:8.00,net:120,gp:60,margin:50.0,confirmed:false},
+  {cat:"Health & Body",item:"Toothbrush",sku:"337120A",units:20,price:4.00,net:80,gp:40,margin:50.0,confirmed:false},
+  {cat:"Health & Body",item:"Crest Toothpaste",sku:"300515N",units:13,price:4.00,net:52,gp:26,margin:50.0,confirmed:false},
+  {cat:"Health & Body",item:"Murphy's Bite Relief Balm",sku:"T631666",units:5,price:8.00,net:40,gp:20,margin:50.0,confirmed:false},
+  {cat:"Health & Body",item:"Nature's Willow Bug Bite Cream",sku:"205883J",units:4,price:10.00,net:40,gp:20,margin:50.0,confirmed:false},
+  {cat:"Health & Body",item:"FaceTory Face Mask",sku:"K863169",units:4,price:5.00,net:20,gp:10,margin:50.0,confirmed:false},
+  {cat:"Health & Body",item:"Wilderness First Aid Kit",sku:"C492800",units:1,price:10.00,net:10,gp:5,margin:50.0,confirmed:false},
+  {cat:"Games",item:"Playing Cards",sku:"5088383",units:26,price:5.00,net:130,gp:65,margin:50.0,confirmed:false},
+  {cat:"Games",item:"Neato! Pick-Up Sticks",sku:"6577361",units:4,price:20.00,net:80,gp:40,margin:50.0,confirmed:false},
+  {cat:"Games",item:"Chess / Checkers / Tic-Tac-Toe",sku:"9991912",units:2,price:30.00,net:60,gp:30,margin:50.0,confirmed:false},
+  {cat:"Games",item:"Timber Tower",sku:"C254956",units:3,price:20.00,net:60,gp:30,margin:50.0,confirmed:false},
+  {cat:"Games",item:"Huckleberry DIY Kaleidoscope",sku:"7945839",units:5,price:10.00,net:50,gp:25,margin:50.0,confirmed:false},
+  {cat:"Games",item:"Ferncrest Frisbee",sku:"917503B",units:9,price:5.00,net:45,gp:23,margin:50.0,confirmed:false},
+  {cat:"Games",item:"Five Crowns Card Game",sku:"V207687",units:3,price:12.00,net:36,gp:18,margin:50.0,confirmed:false},
+  {cat:"Games",item:"Taco Cat Goat Cheese Pizza",sku:"561727Q",units:2,price:12.00,net:24,gp:12,margin:50.0,confirmed:false},
+];
+
+const catColors={
+  "Camp Essentials":"#2E350F","Merchandise":"#306739","S'mores":"#C2760A",
+  "Kitchen & Snacks":"#B7BDA4","Beverage":"#8A9E7A","Health & Body":"#A89070","Games":"#888880"
+};
+
+let activeCat='all', searchTerm='', sortCol='net', sortDir=-1;
+
+function velPill(units){
+  if(units>=200) return '<span class="sku-vel high">Strong</span>';
+  if(units>=50)  return '<span class="sku-vel mid">Solid</span>';
+  if(units>=10)  return '<span class="sku-vel low">Light</span>';
+  return '<span class="sku-vel slow">Slow</span>';
+}
+
+function renderSKU(){
+  let data=[...skuData];
+  if(activeCat!=='all') data=data.filter(r=>r.cat===activeCat);
+  if(searchTerm) data=data.filter(r=>r.item.toLowerCase().includes(searchTerm)||r.sku.toLowerCase().includes(searchTerm));
+  data.sort((a,b)=>{
+    const av=typeof a[sortCol]==='string'?a[sortCol]:a[sortCol];
+    const bv=typeof b[sortCol]==='string'?b[sortCol]:b[sortCol];
+    return av<bv?sortDir:av>bv?-sortDir:0;
+  });
+
+  // Group by category
+  const groups={};
+  data.forEach(r=>{if(!groups[r.cat])groups[r.cat]=[];groups[r.cat].push(r);});
+
+  let html='';
+  Object.entries(groups).forEach(([cat,rows])=>{
+    const col=catColors[cat]||'#888';
+    html+=`<tr><td colspan="8" style="background:var(--sand);padding:7px 14px;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-style:italic;border-bottom:1px solid var(--border);">
+      <span style="display:inline-block;width:8px;height:8px;border-radius:1px;background:${col};margin-right:7px;vertical-align:middle;"></span>${cat}
+    </td></tr>`;
+    rows.forEach(r=>{
+      const est=r.confirmed?'':'<span style="font-size:9px;color:var(--muted);font-style:italic"> est.</span>';
+      html+=`<tr>
+        <td style="font-weight:500;color:var(--forest)">${r.item}</td>
+        <td style="color:var(--muted);font-size:11px;font-style:italic">${r.sku}</td>
+        <td style="text-align:right">${r.units.toLocaleString()}</td>
+        <td style="text-align:right">$${r.price.toFixed(2)}</td>
+        <td style="text-align:right">$${r.net.toLocaleString()}</td>
+        <td style="text-align:right;color:var(--green);font-weight:500">$${r.gp.toLocaleString()}${est}</td>
+        <td style="text-align:right;font-weight:500;color:${r.margin>=55?'#306739':'#6B6B58'}">${r.margin}%</td>
+        <td style="text-align:center">${velPill(r.units)}</td>
+      </tr>`;
+    });
+  });
+
+  document.getElementById('skuTbody').innerHTML=html||'<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--muted);font-style:italic;">No items match</td></tr>';
+  document.getElementById('skuCount').textContent=data.length+' items';
+}
+
+document.querySelectorAll('.sku-filter-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.sku-filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    activeCat=btn.dataset.cat;
+    renderSKU();
+  });
+});
+
+document.getElementById('skuSearch').addEventListener('input',e=>{
+  searchTerm=e.target.value.toLowerCase();
+  renderSKU();
+});
+
+document.querySelectorAll('.sku-th[data-sort]').forEach(th=>{
+  th.addEventListener('click',()=>{
+    if(sortCol===th.dataset.sort) sortDir*=-1; else{sortCol=th.dataset.sort;sortDir=-1;}
+    document.querySelectorAll('.sku-th').forEach(t=>t.classList.remove('sorted'));
+    th.classList.add('sorted');
+    th.querySelector('.sort-arrow').textContent=sortDir===-1?'↓':'↑';
+    renderSKU();
+  });
+});
+
+document.getElementById('skuToggleBtn').addEventListener('click',()=>{
+  const panel=document.getElementById('skuPanel');
+  const btn=document.getElementById('skuToggleBtn');
+  const isOpen=panel.style.display!=='none';
+  panel.style.display=isOpen?'none':'block';
+  btn.textContent=isOpen?'View All 65 SKUs ↓':'Collapse ↑';
+  if(!isOpen) renderSKU();
 });
 </script>
 </body>
